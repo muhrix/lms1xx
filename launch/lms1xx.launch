@@ -1,6 +1,9 @@
+<?xml version="1.0"?>
 <launch>
   <arg name="host" default="192.168.0.13" />
+  <arg name="frame_id" default="laser" />
   <node pkg="lms1xx" name="lms1xx" type="lms1xx_node" output="screen">
     <param name="host" value="$(arg host)" />
+    <param name="frame_id" value="$(arg frame_id)" />
   </node>
 </launch>
