@@ -30,7 +30,7 @@
 #include <cstring>
 #include <unistd.h>
 
-#include "LMS1xx/LMS1xx.h"
+#include "lms1xx/LMS1xx.h"
 
 LMS1xx::LMS1xx() :
 	connected(false) {
