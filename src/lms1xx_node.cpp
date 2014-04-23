@@ -1,6 +1,6 @@
 #include <csignal>
 #include <cstdio>
-#include <LMS1xx/LMS1xx.h>
+#include <lms1xx/LMS1xx.h>
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
   ros::NodeHandle n("~");
   ros::Publisher scan_pub = nh.advertise<sensor_msgs::LaserScan>("scan", 1);
 
-  n.param<std::string>("host", host, "192.168.1.2");
+  n.param<std::string>("host", host, "192.168.0.13");
   n.param<std::string>("frame_id", frame_id, "laser");
 
   ROS_INFO("connecting to laser at : %s", host.c_str());
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
   if (laser.isConnected())
   {
-    ROS_INFO("Connected to laser.");
+    ROS_INFO("Connected to laser");
 
     laser.login();
     cfg = laser.getScanCfg();
@@ -49,8 +49,8 @@ int main(int argc, char **argv)
     scan_msg.angle_min = (double)cfg.startAngle/10000.0 * DEG2RAD - M_PI/2;
     scan_msg.angle_max = (double)cfg.stopAngle/10000.0 * DEG2RAD - M_PI/2;
 
-    std::cout << "resolution : " << (double)cfg.angleResolution/10000.0 << " deg " << std::endl;
-    std::cout << "frequency : " << (double)cfg.scaningFrequency/100.0 << " Hz " << std::endl;
+    ROS_INFO_STREAM("laser resolution : " << (double)cfg.angleResolution/10000.0 << " deg ");
+    ROS_INFO_STREAM("laser frequency : " << (double)cfg.scaningFrequency/100.0 << " Hz ");
 
     int num_values;
     if (cfg.angleResolution == 2500)
